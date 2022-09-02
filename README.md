@@ -13,6 +13,11 @@ Huge thanks for them, and please check out their other projects on [Project Erro
 
 Watch the demo here: [YouTube](https://www.youtube.com/watch?v=cRgh2nqzROI)
 
+## Help
+
+
+If you need any help, you can check out my [Discord](https://discord.com/invite/WmANgpdrgZ)
+
 # Download & Installation
 
 ### Using Git
