@@ -14,6 +14,7 @@ declare type Job = {
   grade_salary: number
   label: string
   name: string
+  isBoss: boolean
   skin_female: Array<any>
   skin_male: Array<any>
 }

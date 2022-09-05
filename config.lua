@@ -1,5 +1,7 @@
 Config = {}
 
+Config.Framework = "esx" -- "esx" or "qb"
+
 Config.Command = "documents"
 
 -- These texts only show up on client side. To change texts in the NUI,

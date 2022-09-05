@@ -1,31 +1,49 @@
+local RegisterCallback
 ESX = nil
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+local QBCore
+if Config.Framework == "esx" then
+  ESX = nil
+  TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+  RegisterCallback = function (name, fn)
+    ESX.RegisterServerCallback(name, fn)
+  end
+elseif Config.Framework == "qb" then
+  QBCore = exports['qb-core']:GetCoreObject()
+  RegisterCallback = function (name, fn)
+    QBCore.Functions.CreateCallback(name, fn)
+  end
+else
+  print("^8ERROR: ^3Unsupported or misspelled framework^7")
+end
 
-ESX.RegisterServerCallback('k5_documents:getPlayerCopies', function(source, cb)
-    local xPlayer = ESX.GetPlayerFromId(source)
 
-    MySQL.Async.fetchAll(
-      'SELECT id, data, isCopy FROM k5_documents WHERE ownerId = @identifier and isCopy = "1"', {
-      ['@identifier'] = xPlayer.identifier
-    }, function(result)
-      local mappedResult = {}
-      for k, v in pairs(result) do
-        local thisData = json.decode(v.data)
-        thisData.id = v.id
-        thisData.isCopy = v.isCopy
-        table.insert(mappedResult, thisData)
-      end
-      cb(mappedResult)
-    end)
+RegisterCallback('k5_documents:getPlayerCopies', function(source, cb)
+  local src = source
+  local PlayerIdentifier = GetPlayerIdentifier(src)
+
+  MySQL.Async.fetchAll(
+    'SELECT id, data, isCopy FROM k5_documents WHERE ownerId = @identifier and isCopy = "1"', {
+    ['@identifier'] = PlayerIdentifier
+  }, function(result)
+    local mappedResult = {}
+    for k, v in pairs(result) do
+      local thisData = json.decode(v.data)
+      thisData.id = v.id
+      thisData.isCopy = v.isCopy
+      table.insert(mappedResult, thisData)
+    end
+    cb(mappedResult)
+  end)
 end)
 
 
-ESX.RegisterServerCallback('k5_documents:getPlayerDocuments', function(source, cb)
-    local xPlayer = ESX.GetPlayerFromId(source)
+RegisterCallback('k5_documents:getPlayerDocuments', function(source, cb)
+  local src = source
+  local PlayerIdentifier = GetPlayerIdentifier(src)
 
     MySQL.Async.fetchAll(
       'SELECT id, data, isCopy FROM k5_documents WHERE ownerId = @identifier and isCopy = "0"', {
-      ['@identifier'] = xPlayer.identifier
+      ['@identifier'] = PlayerIdentifier
     }, function(result)
       local mappedResult = {}
       for k, v in pairs(result) do
@@ -38,36 +56,37 @@ ESX.RegisterServerCallback('k5_documents:getPlayerDocuments', function(source, c
     end)
 end)
 
-ESX.RegisterServerCallback('k5_documents:getDocumentTemplates', function(source, cb)
-    local xPlayer = ESX.GetPlayerFromId(source)
+RegisterCallback('k5_documents:getDocumentTemplates', function(source, cb)
+  local src = source  
+  local PlayerJobName = GetPlayerJobName(src)
 
-    MySQL.Async.fetchAll(
-      'SELECT id, data FROM k5_document_templates WHERE job = @job', {
-      ['@job'] = xPlayer.job.name
-    }, function(result)
-      local mappedResult = {}
-      for k, v in pairs(result) do
-        local thisData = json.decode(v.data)
-        thisData.id = v.id
-        table.insert(mappedResult, thisData)
-      end
-      cb(mappedResult)
-    end)
+  MySQL.Async.fetchAll(
+    'SELECT id, data FROM k5_document_templates WHERE job = @job', {
+    ['@job'] = PlayerJobName
+  }, function(result)
+    local mappedResult = {}
+    for k, v in pairs(result) do
+      local thisData = json.decode(v.data)
+      thisData.id = v.id
+      table.insert(mappedResult, thisData)
+    end
+    cb(mappedResult)
+  end)
 end)
 
-ESX.RegisterServerCallback('k5_documents:createTemplate', function(source, cb, data)
-  local src = source
-  local xPlayer = ESX.GetPlayerFromId(src)
+RegisterCallback('k5_documents:createTemplate', function(source, cb, data)
+  local src = source  
+  local PlayerJobName = GetPlayerJobName(src)
 
   MySQL.Async.insert('INSERT INTO k5_document_templates (data, job) VALUES (@data, @job)', {
 			['@data'] = data,
-			['@job'] = xPlayer.job.name
+			['@job'] = PlayerJobName
 		}, function(result)
       cb(result)
 		end)
 end)
 
-ESX.RegisterServerCallback('k5_documents:editTemplate', function(source, cb, data)
+RegisterCallback('k5_documents:editTemplate', function(source, cb, data)
   local obj = json.decode(data)
 
   MySQL.Async.execute('UPDATE k5_document_templates SET data = @data WHERE id = @id', {
@@ -75,43 +94,44 @@ ESX.RegisterServerCallback('k5_documents:editTemplate', function(source, cb, dat
 			['@id'] = obj.id
 		}, function(result)
       cb(result)
-		end)
+  end)
 end)
 
-ESX.RegisterServerCallback('k5_documents:deleteTemplate', function(source, cb, data)
+RegisterCallback('k5_documents:deleteTemplate', function(source, cb, data)
   MySQL.Async.execute('DELETE FROM k5_document_templates WHERE id = @id', {
 			['@id'] = data
 		}, function(result)
       cb(result)
-		end)
+  end)
 end)
 
 
-ESX.RegisterServerCallback('k5_documents:getPlayerData', function(source, cb)
-    local xPlayer = ESX.GetPlayerFromId(source)
-
-    MySQL.Async.fetchAll(
-      'SELECT firstname, lastname, dateofbirth FROM users WHERE identifier = @identifier', {
-      ['@identifier'] =xPlayer.identifier
-    }, function(result)
-      cb(result[1])
-    end)
-end)
-
-ESX.RegisterServerCallback('k5_documents:createDocument', function(source, cb, data)
+RegisterCallback('k5_documents:getPlayerData', function(source, cb)
   local src = source
-  local xPlayer = ESX.GetPlayerFromId(src)
+  local PlayerIdentifier = GetPlayerIdentifier(src)
+
+  MySQL.Async.fetchAll(
+    'SELECT firstname, lastname, dateofbirth FROM users WHERE identifier = @identifier', {
+    ['@identifier'] = PlayerIdentifier
+  }, function(result)
+    cb(result[1])
+  end)
+end)
+
+RegisterCallback('k5_documents:createDocument', function(source, cb, data)
+  local src = source
+  local PlayerIdentifier = GetPlayerIdentifier(src)
 
   MySQL.Async.insert('INSERT INTO k5_documents (data, ownerId, isCopy) VALUES (@data, @ownerId, @isCopy)', {
 			['@data'] = data,
-			['@ownerId'] = xPlayer.identifier,
+			['@ownerId'] = PlayerIdentifier,
 			['@isCopy'] = json.decode(data).isCopy
 		}, function(result)
       cb(result)
 		end)
 end)
 
-ESX.RegisterServerCallback('k5_documents:deleteDocument', function(source, cb, data)
+RegisterCallback('k5_documents:deleteDocument', function(source, cb, data)
   MySQL.Async.execute('DELETE FROM k5_documents WHERE id = @id', {
 			['@id'] = data
 		}, function(result)
@@ -122,14 +142,13 @@ end)
 RegisterServerEvent('k5_documents:giveCopy')
 AddEventHandler('k5_documents:giveCopy', function(data, targetId)
   local src = source
-  local xPlayer = ESX.GetPlayerFromId(src)
-
   local tsrc = targetId
-  local tPlayer = ESX.GetPlayerFromId(tsrc)
+
+  local TPlayerIdentifier = GetPlayerIdentifier(tsrc)
 
   MySQL.Async.insert('INSERT INTO k5_documents (data, ownerId, isCopy) VALUES (@data, @ownerId, @isCopy)', {
     ['@data'] = json.encode(data),
-    ['@ownerId'] = tPlayer.identifier,
+    ['@ownerId'] = TPlayerIdentifier,
     ['@isCopy'] = true
   }, function(result)
     TriggerClientEvent("k5_documents:copyGave", src, data.name)
@@ -141,12 +160,30 @@ end)
 RegisterServerEvent("k5_documents:receiveDocument")
 AddEventHandler("k5_documents:receiveDocument", function(data, targetId)
   local tsrc = targetId
-  local tPlayer = ESX.GetPlayerFromId(tsrc)
 
   MySQL.Async.fetchAll('SELECT data FROM k5_documents WHERE id = @docId', {
     ['@docId'] = data.docId,
   }, function(result)
     TriggerClientEvent("k5_documents:viewDocument", tsrc, result[1])
   end)
-
 end)
+
+function GetPlayerIdentifier(src)
+  local PlayerIdentifier
+  if Config.Framework == "esx" then
+    PlayerIdentifier = ESX.GetPlayerFromId(src).identifier
+  elseif Config.Framework == "qb" then
+    PlayerIdentifier = QBCore.Functions.GetPlayer(src).PlayerData.citizenid
+  end
+  return PlayerIdentifier
+end
+
+function GetPlayerJobName(src)
+  local PlayerJobName
+  if Config.Framework == "esx" then
+    PlayerJobName = ESX.GetPlayerFromId(src).job.name
+  elseif Config.Framework == "qb" then
+    PlayerJobName = QBCore.Functions.GetPlayer(src).PlayerData.job.name
+  end
+  return PlayerJobName
+end

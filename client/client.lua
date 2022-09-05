@@ -1,31 +1,57 @@
-ESX = nil
-
 local selectingPlayer = false
 local prop = nil
 
-Citizen.CreateThread(function()
-  while ESX == nil do
-    TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-    Citizen.Wait(0)
+local TriggerCallback
+local Notification
+
+local QBCore
+ESX = nil
+
+if Config.Framework == "esx" then
+  Citizen.CreateThread(function()
+    while ESX == nil do
+      TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+      Citizen.Wait(0)
+    end
+
+    while ESX.GetPlayerData().job == nil do
+      Citizen.Wait(10)
+    end
+
+    ESX.PlayerData = ESX.GetPlayerData()
+  end)
+
+  RegisterNetEvent('esx:setJob')
+  AddEventHandler('esx:setJob', function(job)
+    ESX.PlayerData.job = job
+  end)
+
+  RegisterNetEvent('esx:playerLoaded')
+  AddEventHandler('esx:playerLoaded', function(xPlayer)
+    ESX.PlayerData = xPlayer
+    ESX.PlayerLoaded = true
+  end)
+
+  TriggerCallback = function (name, cb, ...) 
+    ESX.TriggerServerCallback(name, cb, ...)
   end
 
-  while ESX.GetPlayerData().job == nil do
-		Citizen.Wait(10)
-	end
+  Notification = function (msg) 
+    ESX.ShowNotification(msg)
+  end
 
-	ESX.PlayerData = ESX.GetPlayerData()
-end)
+elseif Config.Framework == "qb" then
+  QBCore = exports['qb-core']:GetCoreObject()
+  TriggerCallback = function (name, cb, ...) 
+    QBCore.Functions.TriggerCallback(name, cb, ...)
+  end
 
-RegisterNetEvent('esx:setJob')
-AddEventHandler('esx:setJob', function(job)
-	ESX.PlayerData.job = job
-end)
-
-RegisterNetEvent('esx:playerLoaded')
-AddEventHandler('esx:playerLoaded', function(xPlayer)
-	ESX.PlayerData = xPlayer
-	ESX.PlayerLoaded = true
-end)
+  Notification = function (msg) 
+    QBCore.Functions.Notify(msg)
+  end
+else
+  print("^8ERROR: ^3Unsupported or misspelled framework^7")
+end
 
 function holdDocument(shouldHold)
     if shouldHold then
@@ -84,82 +110,104 @@ end
 
 RegisterNUICallback('hideDocument', function(_, cb)
   toggleDocumentFrame(false, nil)
-  debugPrint('Hide NUI frame')
   cb({})
 end)
 
 RegisterCommand(Config.Command, function()
   toggleNuiFrame(true, true)
-  debugPrint('Show NUI frame')
 end)
 
 RegisterNUICallback('hideFrame', function(_, cb)
   toggleNuiFrame(false, false)
-  debugPrint('Hide NUI frame')
   cb({})
 end)
 
 RegisterNUICallback('getPlayerJob', function(data, cb)
-  debugPrint('Data sent by React', json.encode(data))
-  local retData <const> = ESX.PlayerData.job
-  cb(retData)
+  if Config.Framework == "esx" then
+    local retData <const> = ESX.PlayerData.job
+    retData.isBoss = retData.grade_name == "boss"
+    cb(retData)
+  elseif Config.Framework == "qb" then
+    local PlayerJob = QBCore.Functions.GetPlayerData().job
+    local retData = {
+      grade = PlayerJob.grade.level,
+      grade_label = PlayerJob.grade.name,
+      grade_name = PlayerJob.grade.name,
+      grade_salary = PlayerJob.payment,
+      label = PlayerJob.label,
+      name = PlayerJob.name,
+      skin_female = {},
+      skin_male = {},
+    }
+    retData.isBoss = PlayerJob.isboss
+    cb(retData)
+  end
 end)
 
 RegisterNUICallback('getPlayerData', function(data, cb)
-  ESX.TriggerServerCallback('k5_documents:getPlayerData', function(result)
-    cb(result)
-  end)
+  if Config.Framework == "esx" then
+    ESX.TriggerServerCallback('k5_documents:getPlayerData', function(result)
+      cb(result)
+    end)
+  elseif Config.Framework == "qb" then
+    local PlayerData = QBCore.Functions.GetPlayerData().charinfo
+    cb({
+      firstname = PlayerData.firstname,
+      lastname = PlayerData.lastname,
+      dateofbirth = PlayerData.birthdate,
+    })
+  end
 end)
 
 RegisterNUICallback('getPlayerCopies', function(data, cb)
-  ESX.TriggerServerCallback('k5_documents:getPlayerCopies', function(result)
+  TriggerCallback('k5_documents:getPlayerCopies', function(result)
     cb(result)
   end)
 end)
 
 RegisterNUICallback('getIssuedDocuments', function(data, cb)
-  ESX.TriggerServerCallback('k5_documents:getPlayerDocuments', function(result)
+  TriggerCallback('k5_documents:getPlayerDocuments', function(result)
     cb(result)
   end)
 end)
 
 RegisterNUICallback('createDocument', function(data, cb)
-  ESX.TriggerServerCallback('k5_documents:createDocument',function(result)
+  TriggerCallback('k5_documents:createDocument',function(result)
     cb(result)
   end,
   data)
 end)
 
 RegisterNUICallback('createTemplate', function(data, cb)
-  ESX.TriggerServerCallback('k5_documents:createTemplate',function(result)
+  TriggerCallback('k5_documents:createTemplate',function(result)
     cb(result)
   end,
   data)
 end)
 
 RegisterNUICallback('editTemplate', function(data, cb)
-  ESX.TriggerServerCallback('k5_documents:editTemplate',function(result)
+  TriggerCallback('k5_documents:editTemplate',function(result)
     cb(result)
   end,
   data)
 end)
 
 RegisterNUICallback('deleteTemplate', function(data, cb)
-  ESX.TriggerServerCallback('k5_documents:deleteTemplate',function(result)
+  TriggerCallback('k5_documents:deleteTemplate',function(result)
     cb(result)
   end,
   data)
 end)
 
 RegisterNUICallback('deleteDocument', function(data, cb)
-  ESX.TriggerServerCallback('k5_documents:deleteDocument',function(result)
+  TriggerCallback('k5_documents:deleteDocument',function(result)
     cb(result)
   end,
   data)
 end)
 
 RegisterNUICallback('getMyTemplates', function(data, cb)
-  ESX.TriggerServerCallback('k5_documents:getDocumentTemplates', function(result)
+  TriggerCallback('k5_documents:getDocumentTemplates', function(result)
     cb(result)
   end)
 end)
@@ -192,13 +240,13 @@ RegisterNetEvent('k5_documents:copyGave')
 AddEventHandler('k5_documents:copyGave', function(data)
 	holdDocument(false)
   playAnim("mp_common", "givetake1_a", 1500)
-  ESX.ShowNotification(Config.Locale.giveNotification .. " ~b~" .. data)
+  Notification(Config.Locale.giveNotification .. " " .. data)
 end)
 
 
 RegisterNetEvent('k5_documents:copyReceived')
 AddEventHandler('k5_documents:copyReceived', function(data)
-  ESX.ShowNotification(Config.Locale.receiveNotification .. " ~b~" .. data)
+  Notification(Config.Locale.receiveNotification .. " " .. data)
 end)
 
 RegisterNetEvent('k5_documents:viewDocument')
@@ -211,7 +259,12 @@ function playerSelector(confirmText)
   selectingPlayer = true
 
   while selectingPlayer do
-    local closestPlayer, closestPlayerDistance = ESX.Game.GetClosestPlayer()
+    local closestPlayer, closestPlayerDistance
+    if Config.Framework == "esx" then
+      closestPlayer, closestPlayerDistance = ESX.Game.GetClosestPlayer()
+    elseif Config.Framework == "qb" then
+      closestPlayer, closestPlayerDistance = QBCore.Functions.GetClosestPlayer()
+    end
     local closestPlayerCoords = GetEntityCoords(GetPlayerPed(closestPlayer))
 
     DisableControlAction(2, 200, true)
@@ -235,7 +288,7 @@ function playerSelector(confirmText)
       end
     else
       if IsControlJustReleased(0, 38) then
-        ESX.ShowNotification(Config.Locale.noPlayersAround)
+        Notification(Config.Locale.noPlayersAround)
       end
     end
     Citizen.Wait(1)

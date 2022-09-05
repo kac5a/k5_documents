@@ -10,7 +10,7 @@ export const useJob = () => {
   },[job])
 
   const isBoss = useMemo(() => {
-    return job?.grade_name === 'boss' ?? false
+    return job?.isBoss || false
   },[job])
 
   const getPlayerJobData = async () => {
