@@ -81,15 +81,17 @@ end
 function attachPaper()
   local player = PlayerPedId()
   local x,y,z = table.unpack(GetEntityCoords(player))
+  local propName = "prop_cd_paper_pile1"
 
-  while not HasModelLoaded(GetHashKey("h4_prop_h4_files_paper_01b")) do
-    RequestModel(GetHashKey("h4_prop_h4_files_paper_01b"))
+  while not HasModelLoaded(GetHashKey(propName)) do
+    RequestModel(GetHashKey(propName))
     Wait(10)
   end
 
-  prop = CreateObject(GetHashKey("h4_prop_h4_files_paper_01b"), x, y, z+0.2,  true,  true, true)
-  AttachEntityToEntity(prop, player, GetPedBoneIndex(player, 36029), 0.16, 0.08, 0.1, -40.0, -50.0, 0.0, true, true, false, true, 1, true)
-  SetModelAsNoLongerNeeded("h4_prop_h4_files_paper_01b")
+  prop = CreateObject(GetHashKey(propName), x, y, z+0.2,  true,  true, true)
+  SetEntityCompletelyDisableCollision(prop, false, false)
+  AttachEntityToEntity(prop, player, GetPedBoneIndex(player, 36029), 0.16, 0.08, 0.1, -130.0, -50.0, 0.0, true, true, false, true, 1, true)
+  SetModelAsNoLongerNeeded(propName)
 end
 
 function detachPaper()
