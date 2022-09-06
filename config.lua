@@ -4,7 +4,12 @@ Config.Framework = "esx" -- "esx" or "qb"
 
 Config.Command = "documents"
 
-Config.PaperProp = "prop_cd_paper_pile1" --Previously "h4_prop_h4_files_paper_01b"
+Config.PaperProp = {
+  name = "prop_cd_paper_pile1".
+  xRot = -130.0, 
+	yRot = -50.0, 
+	zRot = 0.0, 
+}
 -- These texts only show up on client side. To change texts in the NUI,
 -- go to the web/build/config.js file
 Config.Locale = {
