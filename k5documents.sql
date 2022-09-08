@@ -1,5 +1,3 @@
-USE `es_extended`;
-
 CREATE TABLE `k5_documents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data` longtext,
