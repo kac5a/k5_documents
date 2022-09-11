@@ -3,6 +3,7 @@ fx_version "cerulean"
 description "K5 Documents"
 author "K5 Scripts"
 version '1.1.2'
+update "Design changes, added version check"
 repository 'https://github.com/kac5a/k5_documents'
 
 lua54 'yes'
