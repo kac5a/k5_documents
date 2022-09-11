@@ -30,7 +30,7 @@ export default function App() {
             <Box
               component="main"
               sx={{
-                height: '100%', p: 3, flexGrow: 1, bgcolor: 'background.default', borderRadius: "10px", display: "flex", flexDirection: "column"
+                height: '100%', p: 3, flexGrow: 1, bgcolor: 'background.default', borderRadius: "1vh", display: "flex", flexDirection: "column"
               }}> 
               <Header title={selectedPage.title} />
               {getSelectedComponent(selectedPage.index)}

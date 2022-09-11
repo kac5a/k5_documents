@@ -29,12 +29,12 @@ export default SignedArea
 const Container = styled("div")`
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 1.8vh;
   justify-content: center;
   width: 100%;
   font-size: 1.7rem;
   height: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 1.8vh;
   border: 1px solid #000;
 `
 

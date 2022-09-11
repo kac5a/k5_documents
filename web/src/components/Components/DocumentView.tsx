@@ -20,7 +20,7 @@ const DocumentView = () => {
           <Grid
             container
             spacing={1}
-            style={{padding: "40px"}}
+            style={{padding: "3.5vh"}}
           >
             <Grid item container xs={12} justifyContent="center" flex={1}>
               <DocumentTitle>{document?.name}</DocumentTitle>
@@ -28,41 +28,40 @@ const DocumentView = () => {
             <Grid item container xs={12}>
               <Grid item xs={6}>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                  <img style={{height: "200px"}} src={city_logo} alt="Los Santos City" />
+                  <CityLogo src={city_logo} alt="Los Santos City" />
                 </div>
               </Grid>
               <Grid item xs={6}>
                 <Card elevation={2}>
                   <CardContent>
-                    <Typography style={{fontSize: "0.8rem"}}>{document?.description}</Typography>
-                    <Grid container spacing={1} style={{marginTop: "8px"}}>
+                    <Description>{document?.description}</Description>
+                    <Grid container spacing={1} style={{marginTop: "0.7vh"}}>
                       <Grid item xs={6} >
-                        <Typography style={{ fontWeight: "bold", fontSize: "0.7rem" }}>{texts.issuerFirstname}</Typography>
+                        <IssuerTitle>{texts.issuerFirstname}</IssuerTitle>
                       </Grid>
                       <Grid item xs={6}>
-                        <Typography style={{fontWeight: "bold", fontSize: "0.7rem"}}>{texts.issuerLastname}</Typography>
+                        <IssuerTitle>{texts.issuerLastname}</IssuerTitle>
                       </Grid>
 
                       <Grid item xs={6} >
-                        <Typography style={{ fontSize: "0.9rem" }}>{document?.issuer.firstname}</Typography>
+                        <IssuerData>{document?.issuer.firstname}</IssuerData>
                       </Grid>
                       <Grid item xs={6}>
-                        <Typography style={{ fontSize: "0.9rem" }}>{document?.issuer.lastname}</Typography>
+                        <IssuerData>{document?.issuer.lastname}</IssuerData>
                       </Grid>
 
+                      <Grid item xs={6}>
+                        <IssuerTitle>{texts.issuerDOB}</IssuerTitle>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <IssuerTitle>{texts.issuerJob}</IssuerTitle>
+                      </Grid>
 
-                      <Grid item xs={6}>
-                        <Typography style={{fontWeight: "bold", fontSize: "0.7rem"}}>{texts.issuerDOB}</Typography>
+                      <Grid item xs={6} >
+                        <IssuerData>{moment(new Date(document?.issuer.birthDate || "")).format(DATE_FORMAT_SHORT)}</IssuerData>
                       </Grid>
                       <Grid item xs={6}>
-                        <Typography style={{fontWeight: "bold", fontSize: "0.7rem"}}>{texts.issuerJob}</Typography>
-                      </Grid>
-
-                       <Grid item xs={6} >
-                        <Typography style={{ fontSize: "0.9rem" }}>{moment(new Date(document?.issuer.birthDate || "")).format(DATE_FORMAT_SHORT)}</Typography>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Typography style={{ fontSize: "0.9rem" }}>{ document?.issuer.jobName }</Typography>
+                        <IssuerData>{ document?.issuer.jobName }</IssuerData>
                       </Grid>
                       
                     </Grid>
@@ -70,7 +69,7 @@ const DocumentView = () => {
                 </Card>
               </Grid>
             </Grid>
-            <Grid item container spacing={2} style={{ marginTop: "4px" }}>
+            <Grid item container spacing={2} style={{ marginTop: "0.4vh" }}>
               {document?.fields.map((f, i) => {
                 return (
                   <Grid item xs={6} key={i}>
@@ -79,15 +78,15 @@ const DocumentView = () => {
                 })}
             </Grid>
             <Grid item container xs={12} flex={1}>
-              <DocumentTitle style={{marginTop: "10px"}}>{document?.infoName}</DocumentTitle>
+              <DocumentTitle style={{marginTop: "1vh"}}>{document?.infoName}</DocumentTitle>
             </Grid>
             <Grid item container xs={12} flex={1}>
-              <div style={{ width: "600px", marginTop: "16px", minHeight: "200px"}}>
+              <div style={{ whiteSpace: "pre-wrap", width: "55.5vh", marginTop: "0.5vh", minHeight: "18vh" }}>
                 {document?.infoValue}
               </div>
             </Grid>
             <Grid item container xs={12} flex={1}>
-              <DocumentTitle style={{ marginTop: "10px" }}>{texts.termsAndSigning}</DocumentTitle>
+              <DocumentTitle style={{ marginTop: "1vh" }}>{texts.termsAndSigning}</DocumentTitle>
             </Grid>
             <Grid item xs={12} container spacing={1}>
               <Grid item xs={6}>
@@ -116,4 +115,21 @@ const StyledDocument = styled("div")`
   display: flex;
   align-content: center;
   justify-content: center;
+`
+
+const Description = styled(Typography)`
+  font-size: 0.7rem;
+`
+
+const IssuerTitle = styled(Typography)`
+  font-weight: bold;
+  font-size: 0.6rem;
+`
+
+const IssuerData = styled(Typography)`
+  font-size: 0.8rem;
+`
+
+const CityLogo = styled('img')`
+  width: 14vh;
 `

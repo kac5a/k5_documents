@@ -16,6 +16,21 @@ else
   print("^8ERROR: ^3Unsupported or misspelled framework^7")
 end
 
+Citizen.CreateThread(function()
+    Citizen.Wait(5000)
+    local resource = GetCurrentResourceName()
+    local currentVersion = GetResourceMetadata(resource, 'version', 0)
+    PerformHttpRequest('https://raw.githubusercontent.com/kac5a/k5_documents/master/fxmanifest.lua',function(error, result, headers)
+      if not result then print('K5 Documents: ^1Couldn\'t check version.^0') end
+      local version = string.sub(result, string.find(result, "%d.%d.%d"))
+      local version_N = tonumber((version:gsub("%D+", "")))
+      local currentVersion_N = tonumber((currentVersion:gsub("%D+", "")))
+
+      if version_N > currentVersion_N then
+        print('^1!!! ^4[K5 DOCUMENTS]^0: New update available on GitHub. ^1'..currentVersion.. '^0 -> ^2'..version..' ^1!!!^0')
+      end
+    end,'GET')
+end)
 
 RegisterCallback('k5_documents:getPlayerCopies', function(source, cb)
   local src = source

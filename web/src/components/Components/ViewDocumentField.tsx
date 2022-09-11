@@ -23,13 +23,11 @@ const Container = styled("div")`
 `
 const Name = styled("div")`
   width: 100%;
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 0.9rem;
 `
 
 const Value = styled("div")`
-  width: calc(100% - 5px);
-  font-size: 0.8rem;
-  margin-left: 5px;
+  font-weight: bold;
+  font-size: 1rem;
   margin-bottom: 8px;
 `

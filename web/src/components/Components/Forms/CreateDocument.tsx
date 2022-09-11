@@ -75,7 +75,7 @@ const CreateDocument = ({ template, handleCreate, handleClose }: Props) => {
           <Grid
             container
             spacing={1}
-            style={{padding: "40px"}}
+            style={{padding: "3.5vh"}}
           >
             <Grid item container xs={12} justifyContent="center" flex={1}>
               <DocumentTitle>{template.documentName}</DocumentTitle>
@@ -83,7 +83,7 @@ const CreateDocument = ({ template, handleCreate, handleClose }: Props) => {
             <Grid item container xs={12}>
               <Grid item xs={6}>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                  <img style={{height: "200px"}} src={city_logo} alt="Los Santos City" />
+                  <img style={{height: "18.5vh"}} src={city_logo} alt="Los Santos City" />
                 </div>
               </Grid>
               <Grid item xs={6}>
@@ -141,10 +141,10 @@ const CreateDocument = ({ template, handleCreate, handleClose }: Props) => {
               })}
             </Grid>
             <Grid item container xs={12} flex={1}>
-              <DocumentTitle style={{marginTop: "10px"}}>{template.infoName}</DocumentTitle>
+              <DocumentTitle style={{marginTop: "1vh"}}>{template.infoName}</DocumentTitle>
             </Grid>
             <Grid item container xs={12} flex={1}>
-              <div style={{ width: "600px", marginTop: "16px"}}>
+              <div style={{ width: "55.5vh", marginTop: "1.5vh"}}>
                 <DocTextField multiline rows={8}
                   label={template.infoName}
                   size="small"
@@ -155,7 +155,7 @@ const CreateDocument = ({ template, handleCreate, handleClose }: Props) => {
               </div>
             </Grid>
             <Grid item container xs={12} flex={1}>
-              <DocumentTitle style={{ marginTop: "10px" }}>{texts.termsAndSigning}</DocumentTitle>
+              <DocumentTitle style={{ marginTop: "1vh" }}>{texts.termsAndSigning}</DocumentTitle>
             </Grid>
             <Grid item xs={12} container spacing={1}>
               <Grid item xs={6}>
@@ -169,9 +169,9 @@ const CreateDocument = ({ template, handleCreate, handleClose }: Props) => {
                 <SignButton name={`${playerData?.firstname} ${playerData?.lastname}`} isSigned={isSigned} setSigned={setSigned} />
               </Grid>
             </Grid>
-            <Grid item container justifyContent="center" flex={1} style={{ marginTop: "16px" }}>
+            <Grid item container justifyContent="center" flex={1} style={{ marginTop: "1.5vh" }}>
               <Button disabled={!isSigned} type="submit" variant="contained" color="success" >{texts.createDocumentBtn}</Button>
-              <Button variant="contained" color="secondary" style={{marginLeft: "20px"}} onClick={handleClose} >{texts.cancel}</Button>
+              <Button variant="contained" color="secondary" style={{marginLeft: "1.8vh"}} onClick={handleClose} >{texts.cancel}</Button>
             </Grid>
           </Grid>
           

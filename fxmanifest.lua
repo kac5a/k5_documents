@@ -1,15 +1,14 @@
 fx_version "cerulean"
 
-description "Basic React (TypeScript) & Lua Game Scripts Boilerplate"
-author "Project Error"
-version '1.0.0'
-repository 'https://github.com/project-error/fivem-react-boilerplate-lua'
+description "K5 Documents"
+author "K5 Scripts"
+version '1.1.2'
+repository 'https://github.com/kac5a/k5_documents'
 
 lua54 'yes'
 
 games {
   "gta5",
-  "rdr3"
 }
 
 ui_page 'web/build/index.html'

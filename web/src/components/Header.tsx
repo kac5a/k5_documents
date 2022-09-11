@@ -35,7 +35,7 @@ const Header = ({title}: Props) => {
 
 const Container = styled("div")`
   display: flex;
-  margin-bottom: 8px
+  margin-bottom: 0.7vh;
 `
 
 export default Header

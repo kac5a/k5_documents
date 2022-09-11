@@ -39,14 +39,14 @@ const CreateEditTemplate = ({templateData, handleCreate, handleEdit}: Props) => 
   return (
     <form onSubmit={templateData ? handleSubmit(handleEditTemplate) :  handleSubmit(handleCreateTemplate)}>
       <StyledDocument>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box style={{width: "calc(60vh - 3.6vh)"}}>
           <Grid
             container
             spacing={1}
             width="100%"
           >
             <Grid item container xs={12} justifyContent="center" flex={1}>
-              <div style={{ width: "300px" }}>
+              <div style={{ width: "27.7vh" }}>
                 <DocTextField
                   size="small"
                   label={texts.docNameField}
@@ -116,7 +116,7 @@ const CreateEditTemplate = ({templateData, handleCreate, handleEdit}: Props) => 
               }
             </Grid>
             <Grid item container xs={12} flex={1}>
-              <div style={{ width: "600px", marginTop: "16px"}}>
+              <div style={{ width: "55.5vh", marginTop: "1.5vh"}}>
                 <DocTextField
                   label={texts.docInfoNameField}
                   size="small"
@@ -127,7 +127,7 @@ const CreateEditTemplate = ({templateData, handleCreate, handleEdit}: Props) => 
               </div>
             </Grid>
             <Grid item container xs={12} flex={1}>
-              <div style={{ width: "600px", marginTop: "16px"}}>
+              <div style={{ width: "55.5vh", marginTop: "1.5vh"}}>
                 <DocTextField multiline rows={8}
                   label={texts.docInfoValueField}
                   size="small"
@@ -138,7 +138,7 @@ const CreateEditTemplate = ({templateData, handleCreate, handleEdit}: Props) => 
               </div>
             </Grid>
             <Grid item container xs={12} flex={1}>
-              <div style={{ width: "600px", marginTop: "16px"}}>
+              <div style={{ width: "55.5vh", marginTop: "1.5vh"}}>
                 <DocTextField
                   type="number"
                   label={texts.docMinGradeField}
@@ -148,7 +148,7 @@ const CreateEditTemplate = ({templateData, handleCreate, handleEdit}: Props) => 
               </div>
             </Grid>
           </Grid>
-          <Grid container justifyContent="center" flex={1} style={{ marginTop: "16px" }}>
+          <Grid container justifyContent="center" flex={1} style={{ marginTop: "1.5vh" }}>
             <Button type="submit" variant="contained" color="success" >{templateData ? texts.editTemplateBtn : texts.createTemplateBtn}</Button>
           </Grid>
         </Box>
@@ -165,7 +165,7 @@ const StyledDocument = styled("div")`
   display: flex;
   align-content: center;
   justify-content: center;
-  padding: 20px;
+  padding: 1.8vh;
   
 `
 
@@ -174,8 +174,8 @@ const DocTextField = styled(TextField)`
 `
 
 const DummyText = styled("div")`
-  height: 20px;
+  height: 1.8vh;
   background: lightgray;
-  border-radius: 11px;
+  border-radius: 1px;
   width: 100%
 `
