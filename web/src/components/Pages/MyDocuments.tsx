@@ -86,6 +86,9 @@ const MyDocuments = () => {
           columns={columns}
           loading={documentCopiesLoading}
           pageSize={5}
+          initialState={{
+              sorting: {sortModel: [{field: "createdAt", sort: 'desc'}]}
+            }}
           rowsPerPageOptions={[5]}
           disableSelectionOnClick
         />
@@ -95,7 +98,7 @@ const MyDocuments = () => {
         handleAgree={handleDelete}
         handleCancel={handleCancel}
         title={texts.deleteDocumentTitle}
-        text={`${texts.deleteDocumentQuestion} ${documentToDelete?.documentName || ""}`}
+        text={`${texts.deleteDocumentQuestion} ${documentToDelete?.name || ""}`}
       />
       <DocumentView />
     </>

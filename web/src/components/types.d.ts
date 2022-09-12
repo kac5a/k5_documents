@@ -27,7 +27,6 @@ declare type Field = {
 declare type K5Document = {
   id?: string
   name: string
-  documentName: string
   createdAt: string
   description: string
   fields: Field[]

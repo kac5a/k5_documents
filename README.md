@@ -15,7 +15,6 @@ Watch the demo here: [YouTube](https://www.youtube.com/watch?v=cRgh2nqzROI)
 
 ## Help
 
-
 If you need any help, you can check out my [Discord](https://discord.com/invite/WmANgpdrgZ)
 
 # Download & Installation
@@ -51,6 +50,46 @@ The other one is located in `web/build/config.js` This JavaScript file contains 
 Only job bosses can access and edit the templates, that is shown in the demo video.
 
 You can also change colors and texts if you scroll down in the config.
+
+## Server side document creation
+
+You can call the `k5_documents:createServerDocument` server event with a single data parameter. This will create a copy to the specified document and give it to the players "My Documents" table.
+
+### Example to add a vehicle purchase document:
+
+    TriggerServerEvent('k5_documents:createServerDocument', {
+        name = "Vehicle Purchase Document",
+        description = "This is an official purchase document",
+        fields = {
+            {
+                name = "Firstname",
+                value = result.firstname
+            },
+            {
+                name = "Lastname",
+                value = result.lastname
+            },
+            {
+                name = "Vehicle Type",
+                value = GetDisplayNameFromVehicleModel(GetHashKey(vehicleData.model))
+            },
+            {
+                name = "Plate Number",
+                value = generatedPlate
+            }
+        },
+        infoName = "INFORMATION",
+        infoValue = "This vehicle was purchased by ".. result.firstname .. " " .. result.lastname .. ".\nThis paper is an official document that proves the original owner of the vehicle.",
+        isCopy = true ,
+        issuer = {
+            firstname = "Simeon",
+            lastname = "Yetarian",
+            birthDate = "1954. 05. 26.",
+            jobName = "Dealership Owner"
+        }
+    })
+
+### More information can be found in the `server.lua` file.
 
 ## ⚛ React
 

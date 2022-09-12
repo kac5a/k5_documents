@@ -143,7 +143,7 @@ const IssuedDocuments = () => {
         handleAgree={handleDelete}
         handleCancel={handleCancel}
         title={texts.deleteDocumentTitle}
-        text={`${texts.deleteDocumentQuestion} ${documentToDelete?.documentName || ""}`}
+        text={`${texts.deleteDocumentQuestion} ${documentToDelete?.name || ""}`}
       />
       <DocumentView/>
     </>
