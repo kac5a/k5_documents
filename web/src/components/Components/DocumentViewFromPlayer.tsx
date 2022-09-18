@@ -7,13 +7,13 @@ import ViewDocumentField from "./ViewDocumentField"
 import SignedArea from "./SignedArea"
 import { DATE_FORMAT_SHORT } from "../../utils/consts"
 import { useContext } from "react"
-import { DocumentCtx } from "../../providers/DocumentProvider"
 import { texts } from "../../AppConfig"
+import { VisibilityCtx } from "../../providers/VisibilityProvider"
 
 
 const DocumentViewFromPlayer = () => {
 
-  const { document } = useContext(DocumentCtx)
+  const { givenDocument: document } = useContext(VisibilityCtx)
   
   return (
     <Paper>
