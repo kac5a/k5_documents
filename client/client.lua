@@ -97,33 +97,29 @@ function detachPaper()
   DeleteEntity(prop)
 end
 
-local function toggleNuiFrame(shouldShow, shouldHoldDocument, givenDocument)
+local function toggleNuiFrame(shouldShow, shouldHoldDocument)
   holdDocument(shouldHoldDocument)
   SetNuiFocus(shouldShow, shouldShow)
-  print(givenDocument)
-  SendReactMessage('setVisible', {
-    app = shouldShow,
-    givenDocument = givenDocument
-  })
+  SendReactMessage('setVisible', shouldShow)
 end
 
--- local function toggleDocumentFrame(shouldShow, document)
---   holdDocument(shouldShow)
---   SetNuiFocus(shouldShow, shouldShow)
---   SendReactMessage('setDocument', document)
--- end
+local function toggleDocumentFrame(shouldShow, document)
+  holdDocument(shouldShow)
+  SetNuiFocus(shouldShow, shouldShow)
+  SendReactMessage('setDocument', document)
+end
 
--- RegisterNUICallback('hideDocument', function(_, cb)
---   toggleDocumentFrame(false, nil)
---   cb({})
--- end)
+RegisterNUICallback('hideDocument', function(_, cb)
+  toggleDocumentFrame(false, nil)
+  cb({})
+end)
 
 RegisterCommand(Config.Command, function()
-  toggleNuiFrame(true, true, nil)
+  toggleNuiFrame(true, true)
 end)
 
 RegisterNUICallback('hideFrame', function(_, cb)
-  toggleNuiFrame(false, false, nil)
+  toggleNuiFrame(false, false)
   cb({})
 end)
 
@@ -232,8 +228,6 @@ RegisterNUICallback('showDocument', function(data, cb)
   Citizen.CreateThread(function()
     local targetId = playerSelector(Config.Locale.showDocument)
     if targetId == -1 then
-      print("asd")
-      TriggerServerEvent("k5_documents:receiveDocument", data, -1)
       holdDocument(false)
     else
       holdDocument(false)
@@ -258,8 +252,7 @@ end)
 
 RegisterNetEvent('k5_documents:viewDocument')
 AddEventHandler('k5_documents:viewDocument', function(data)
-  print(data)
-	toggleNuiFrame(true, true, data.data)
+	toggleDocumentFrame(true, data.data)
 end)
 
 function playerSelector(confirmText)

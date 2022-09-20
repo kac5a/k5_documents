@@ -1,5 +1,18 @@
 // These are the jobs that can create documents. The boss rank of this job can create document templates.
-const AVAILABLE_JOBS = ['police', 'ambulance', 'mechanic']
+const AVAILABLE_JOBS = [
+  {
+    job: 'police',
+    templateGrades: [3, 4],
+  },
+  {
+    job: 'ambulance',
+    templateGrades: [3],
+  },
+  {
+    job: 'mechanic',
+    templateGrades: [4],
+  },
+]
 
 const COLORS = {
   // These are hexadecimal color codes for the main theme. You can change them as you wish.
@@ -20,7 +33,10 @@ const TEXTS = {
   myDocumentsTitle: 'My Documents',
   issuedDocumentsTitle: 'Issued Documents',
   templatesTitle: 'Templates',
+  customDocumentName: 'Custom Document Name',
+  documentType: 'Type',
   documentName: 'Name',
+  unnamed: 'Unnamed',
   actions: 'Actions',
   edit: 'Edit',
   cancel: 'Cancel',

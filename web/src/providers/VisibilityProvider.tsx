@@ -8,21 +8,14 @@ export const VisibilityCtx = createContext<VisibilityProviderValue>({} as Visibi
 type VisibilityProviderValue = {
   setVisible: (visible: boolean) => void
   visible: boolean
-  givenDocument: K5Document | undefined
-  setGivenDocument: (doc: K5Document | undefined) => void
 }
 
 // This should be mounted at the top level of your application, it is currently set to
 // apply a CSS visibility value. If this is non-performant, this should be customized.
 export const VisibilityProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [visible, setVisible] = useState(false)
-  const [givenDocument, setGivenDocument] = useState<K5Document| undefined>()
 
-  useNuiEvent<{ app: boolean, givenDocument: string | undefined }>('setVisible', (data: { app: boolean, givenDocument: string | undefined }) => {
-    console.log(data.givenDocument)
-    setVisible(data.app)
-    data.givenDocument && setGivenDocument(JSON.parse(data.givenDocument) as K5Document)
-  })
+  useNuiEvent<boolean>('setVisible', setVisible)
 
   // Handle pressing escape/backspace
   useEffect(() => {
@@ -48,12 +41,10 @@ export const VisibilityProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       value={{
         visible,
         setVisible,
-        givenDocument,
-        setGivenDocument
       }}
     >
     <div style={{ visibility: visible ? 'visible' : 'hidden', height: '100%'}}>
-        {children}
+        {visible && children}
     </div>
   </VisibilityCtx.Provider>)
 }

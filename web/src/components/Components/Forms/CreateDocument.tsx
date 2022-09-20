@@ -48,10 +48,11 @@ const CreateDocument = ({ template, handleCreate, handleClose }: Props) => {
     rules: { required: texts.requiredError }
   })
 
-  const handleCreateTemplate: SubmitHandler<K5Document> = (data: K5Document) => {
+  const handleCreateDocument: SubmitHandler<K5Document> = (data: K5Document) => {
     let result = {
       name: data.name,
       createdAt: (new Date()).toString(),
+      customName: data.customName,
       description: data.description,
       fields: data.fields,
       isCopy: false,
@@ -69,7 +70,7 @@ const CreateDocument = ({ template, handleCreate, handleClose }: Props) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleCreateTemplate)}>
+    <form onSubmit={handleSubmit(handleCreateDocument)}>
       <StyledDocument>
         <Box style={{width: 0}} sx={{ flexGrow: 1 }}>
           <Grid
@@ -170,6 +171,14 @@ const CreateDocument = ({ template, handleCreate, handleClose }: Props) => {
               </Grid>
             </Grid>
             <Grid item container justifyContent="center" flex={1} style={{ marginTop: "1.5vh" }}>
+              <DocTextField
+                size="small"
+                label={texts.customDocumentName}
+                error={!!errors.customName}
+                style={{width: "auto", marginRight: "auto", justifySelf: "flex-start"}}
+                helperText={errors.customName?.message as string}
+                {...register("customName")}
+              />
               <Button disabled={!isSigned} type="submit" variant="contained" color="success" >{texts.createDocumentBtn}</Button>
               <Button variant="contained" color="secondary" style={{marginLeft: "1.8vh"}} onClick={handleClose} >{texts.cancel}</Button>
             </Grid>

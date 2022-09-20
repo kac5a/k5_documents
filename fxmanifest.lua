@@ -2,8 +2,8 @@ fx_version "cerulean"
 
 description "A better document management script"
 author "K5 Scripts"
-version '1.1.4'
-update "Fixed visual bug when giving document to someone"
+version '1.1.5'
+update "Custom document names, template creation set for job grades, bug fixes"
 repository 'https://github.com/kac5a/k5_documents'
 
 lua54 'yes'

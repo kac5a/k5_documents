@@ -1,4 +1,4 @@
-import { DataGrid, GridActionsCellItem, GridColumns, GridRowParams, GridValueGetterParams } from "@mui/x-data-grid"
+import { DataGrid, GridActionsCellItem, GridColumns, GridRenderCellParams, GridRowParams, GridValueGetterParams } from "@mui/x-data-grid"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { useCallback, useContext, useEffect, useState } from "react"
 import { fetchNui } from "../../utils/fetchNui"
@@ -47,8 +47,14 @@ const IssuedDocuments = () => {
 
   const columns: GridColumns<K5Document> = [
     {
+      field: 'customName',
+      headerName: texts.customName,
+      flex: 1,
+      renderCell: (params: GridRenderCellParams<string | undefined>) => (params.value === undefined ? <div style={{ fontStyle: "italic" }}>{texts.unnamed}</div> : params.value)
+    },
+    {
       field: 'name',
-      headerName: texts.documentName,
+      headerName: texts.documentType,
       flex: 1,
     },
     {

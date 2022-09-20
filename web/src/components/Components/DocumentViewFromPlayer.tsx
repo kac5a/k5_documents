@@ -8,13 +8,13 @@ import SignedArea from "./SignedArea"
 import { DATE_FORMAT_SHORT } from "../../utils/consts"
 import { useContext } from "react"
 import { texts } from "../../AppConfig"
-import { VisibilityCtx } from "../../providers/VisibilityProvider"
+import { DocumentCtx } from "../../providers/DocumentProvider"
 
 
 const DocumentViewFromPlayer = () => {
-
-  const { givenDocument: document } = useContext(VisibilityCtx)
   
+  const { document } = useContext(DocumentCtx)
+
   return (
     <Paper>
     <StyledDocument>

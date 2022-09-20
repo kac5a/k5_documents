@@ -8,10 +8,10 @@ type Props = {
   selected: Page
   setSelected: (selectedPage: Page) => void
   job: string
-  isBoss: boolean
+  jobGrade: number
 }
 
-const Menu = ({isBoss, selected, job, setSelected}: Props) => {
+const Menu = ({jobGrade, selected, job, setSelected}: Props) => {
 
   const handleListItemClick = (selectedPage: Page) => {
     setSelected(selectedPage);
@@ -21,13 +21,13 @@ const Menu = ({isBoss, selected, job, setSelected}: Props) => {
     if (!navLink.jobAccess) { 
       return true
     } else if (!navLink.bossOnly) {
-      if (availableJobs.includes(job)) {
+      if (availableJobs.filter(j => j.job === job).length) {
         return true
       } else {
         return false
       }
     } else {
-      if (availableJobs.includes(job) && isBoss) {
+      if (availableJobs.filter(j => j.job === job && j.templateGrades.includes(jobGrade)).length) {
         return true
       } else {
         return false

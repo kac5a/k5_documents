@@ -2,18 +2,15 @@ import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
 import Header from './Header';
 import Menu from './Menu/Menu';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { NavLinks } from './Menu/NavLinks';
 import { useJob } from '../hooks/useJob';
 import { debugData } from '../utils/debugData';
 import { ContextProvider } from '../context/Context';
-import { VisibilityCtx } from '../providers/VisibilityProvider';
-import DocumentViewFromPlayer from './Components/DocumentViewFromPlayer';
 
 export default function App() {
   const [selectedPage, setSelectedPage] = useState<Page>(NavLinks[0])
-  const { isBoss, job } = useJob()
-  const {visible, givenDocument} = useContext(VisibilityCtx)
+  const { job } = useJob()
 
   debugData([
     {
@@ -24,10 +21,10 @@ export default function App() {
 
   return (
     <ContextProvider>
-      {visible && !givenDocument && <Box sx={{  p:0, height: "70vh", width: "70vw", display: "flex", alignItems: "center" }}>
+      <Box sx={{ p:0, height: "70vh", width: "70vw", display: "flex", alignItems: "center" }}>
         <Grid container sx={{height: '100%'}}>
           <Grid item xs={3} style={{marginTop: "auto", marginBottom: "auto"}}>
-            <Menu selected={selectedPage} isBoss={isBoss} job={job?.name!} setSelected={setSelectedPage}/>
+            <Menu selected={selectedPage} jobGrade={job?.grade!} job={job?.name!} setSelected={setSelectedPage}/>
           </Grid>
           <Grid item xs={9}>
             <Box
@@ -40,8 +37,7 @@ export default function App() {
             </Box>
           </Grid>
         </Grid>
-      </Box>}
-      {visible && givenDocument && <DocumentViewFromPlayer />}
+      </Box>
     </ContextProvider>
   );
 }
