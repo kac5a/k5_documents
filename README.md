@@ -29,7 +29,7 @@ git clone https://github.com/kac5a/k5_documents.git [scripts]/k5_documents
 
 ### Manually
 
-- Download [https://github.com/kac5a/k5_documents/](https://github.com/kac5a/k5_documents/)
+- Download the latest release from: [https://github.com/kac5a/k5_documents/](https://github.com/kac5a/k5_documents/)
 
 - Put it in your resources directory
 
