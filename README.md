@@ -35,6 +35,8 @@ git clone https://github.com/kac5a/k5_documents.git [scripts]/k5_documents
 
 ### Installation
 
+Run the included `k5_documents.sql` file on your database
+
 Add this in your `server.cfg`:
 
 ```
