@@ -47,7 +47,7 @@ There are two config files that you have to check. The first one is in the root 
 
 The other one is located in `web/build/config.js` This JavaScript file contains most of the configuration that you need. In the `AVAILABLE_JOBS` array you have to define the jobs names (storen in your database) that can access the Issued Documents, and Document Templates section.
 
-Only job bosses can access and edit the templates, that is shown in the demo video.
+Only specified grades can access and edit the templates, that is shown in the demo video. These grades can be configurated in the same `config.js` file.
 
 You can also change colors and texts if you scroll down in the config.
 
