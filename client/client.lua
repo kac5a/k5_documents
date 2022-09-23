@@ -6,8 +6,18 @@ local Notification
 
 local QBCore
 ESX = nil
+local CurrentFramework
 
-if Config.Framework == "esx" then
+if GetResourceState("es_extended") == "started" then
+  CurrentFramework = "esx"
+elseif GetResourceState("qb-core") == "started" then
+  CurrentFramework = "qb"
+else
+  print("^8ERROR: ^3This script only supports ESX and QBCore frameworks, but non of these are not present. Unfortunatelly, you cannot use this script.^7")
+  return
+end
+
+if CurrentFramework == "esx" then
   Citizen.CreateThread(function()
     while ESX == nil do
       TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
@@ -40,7 +50,7 @@ if Config.Framework == "esx" then
     ESX.ShowNotification(msg)
   end
 
-elseif Config.Framework == "qb" then
+elseif CurrentFramework == "qb" then
   QBCore = exports['qb-core']:GetCoreObject()
   TriggerCallback = function (name, cb, ...) 
     QBCore.Functions.TriggerCallback(name, cb, ...)
@@ -49,8 +59,6 @@ elseif Config.Framework == "qb" then
   Notification = function (msg) 
     QBCore.Functions.Notify(msg)
   end
-else
-  print("^8ERROR: ^3Unsupported or misspelled framework^7")
 end
 
 function holdDocument(shouldHold)
@@ -114,9 +122,11 @@ RegisterNUICallback('hideDocument', function(_, cb)
   cb({})
 end)
 
-RegisterCommand(Config.Command, function()
-  toggleNuiFrame(true, true)
-end)
+if CurrentFramework then
+  RegisterCommand(Config.Command, function()
+    toggleNuiFrame(true, true)
+  end)
+end
 
 RegisterNUICallback('hideFrame', function(_, cb)
   toggleNuiFrame(false, false)
@@ -124,11 +134,11 @@ RegisterNUICallback('hideFrame', function(_, cb)
 end)
 
 RegisterNUICallback('getPlayerJob', function(data, cb)
-  if Config.Framework == "esx" then
+  if CurrentFramework == "esx" then
     local retData <const> = ESX.PlayerData.job
     retData.isBoss = retData.grade_name == "boss"
     cb(retData)
-  elseif Config.Framework == "qb" then
+  elseif CurrentFramework == "qb" then
     local PlayerJob = QBCore.Functions.GetPlayerData().job
     local retData = {
       grade = PlayerJob.grade.level,
@@ -146,11 +156,11 @@ RegisterNUICallback('getPlayerJob', function(data, cb)
 end)
 
 RegisterNUICallback('getPlayerData', function(data, cb)
-  if Config.Framework == "esx" then
+  if CurrentFramework == "esx" then
     ESX.TriggerServerCallback('k5_documents:getPlayerData', function(result)
       cb(result)
     end)
-  elseif Config.Framework == "qb" then
+  elseif CurrentFramework == "qb" then
     local PlayerData = QBCore.Functions.GetPlayerData().charinfo
     cb({
       firstname = PlayerData.firstname,
@@ -261,9 +271,9 @@ function playerSelector(confirmText)
 
   while selectingPlayer do
     local closestPlayer, closestPlayerDistance
-    if Config.Framework == "esx" then
+    if CurrentFramework == "esx" then
       closestPlayer, closestPlayerDistance = ESX.Game.GetClosestPlayer()
-    elseif Config.Framework == "qb" then
+    elseif CurrentFramework == "qb" then
       closestPlayer, closestPlayerDistance = QBCore.Functions.GetClosestPlayer()
     end
     local closestPlayerCoords = GetEntityCoords(GetPlayerPed(closestPlayer))

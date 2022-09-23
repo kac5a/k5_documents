@@ -1,19 +1,28 @@
 local RegisterCallback
 ESX = nil
 local QBCore
-if Config.Framework == "esx" then
+local CurrentFramework
+
+if GetResourceState("es_extended") == "started" then
+  CurrentFramework = "esx"
+elseif GetResourceState("qb-core") == "started" then
+  CurrentFramework = "qb"
+else
+  print("^8ERROR: ^3This script only supports ESX and QBCore frameworks, but non of these are present. Unfortunatelly, you cannot use this script.^7")
+  return
+end
+
+if CurrentFramework == "esx" then
   ESX = nil
   TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
   RegisterCallback = function (name, fn)
     ESX.RegisterServerCallback(name, fn)
   end
-elseif Config.Framework == "qb" then
+elseif CurrentFramework == "qb" then
   QBCore = exports['qb-core']:GetCoreObject()
   RegisterCallback = function (name, fn)
     QBCore.Functions.CreateCallback(name, fn)
   end
-else
-  print("^8ERROR: ^3Unsupported or misspelled framework^7")
 end
 
 Citizen.CreateThread(function()
@@ -273,9 +282,9 @@ end)
 
 function GetPlayerIdentifier(src)
   local PlayerIdentifier
-  if Config.Framework == "esx" then
+  if CurrentFramework == "esx" then
     PlayerIdentifier = ESX.GetPlayerFromId(src).identifier
-  elseif Config.Framework == "qb" then
+  elseif CurrentFramework == "qb" then
     PlayerIdentifier = QBCore.Functions.GetPlayer(src).PlayerData.citizenid
   end
   return PlayerIdentifier
@@ -283,9 +292,9 @@ end
 
 function GetPlayerJobName(src)
   local PlayerJobName
-  if Config.Framework == "esx" then
+  if CurrentFramework == "esx" then
     PlayerJobName = ESX.GetPlayerFromId(src).job.name
-  elseif Config.Framework == "qb" then
+  elseif CurrentFramework == "qb" then
     PlayerJobName = QBCore.Functions.GetPlayer(src).PlayerData.job.name
   end
   return PlayerJobName

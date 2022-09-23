@@ -2,8 +2,8 @@ fx_version "cerulean"
 
 description "A better document management script"
 author "K5 Scripts"
-version '1.1.5'
-update "Custom document names, template creation set for job grades, bug fixes"
+version '1.1.6'
+update "Automatic framework detection"
 repository 'https://github.com/kac5a/k5_documents'
 
 lua54 'yes'

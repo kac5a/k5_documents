@@ -1,7 +1,5 @@
 Config = {}
 
-Config.Framework = "esx" -- "esx" or "qb"
-
 Config.Command = "documents"
 
 Config.PaperProp = {
