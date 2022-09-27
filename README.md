@@ -43,7 +43,7 @@ git clone https://github.com/kac5a/k5_documents.git [scripts]/k5_documents
 ensure k5_documents
 ```
 
-# Usage
+# Config
 
 There are two config files that you have to check. The first one is in the root folder called `config.lua`. This file contains some translatable texts that show up in the ESX UI.
 
