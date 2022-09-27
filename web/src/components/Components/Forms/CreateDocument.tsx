@@ -9,7 +9,7 @@ import city_logo from "../../../assets/city_logo.png"
 import { useState } from "react";
 import SignButton from "./SignButton";
 import { DATE_FORMAT_SHORT } from "../../../utils/consts";
-import { texts } from "../../../AppConfig";
+import { availableJobs, texts } from "../../../AppConfig";
 
 type Props = {
   template: DocumentTemplate
@@ -48,11 +48,14 @@ const CreateDocument = ({ template, handleCreate, handleClose }: Props) => {
     rules: { required: texts.requiredError }
   })
 
+
+
   const handleCreateDocument: SubmitHandler<K5Document> = (data: K5Document) => {
     let result = {
       name: data.name,
       createdAt: (new Date()).toString(),
-      customName: data.customName,
+      customName: data.customName?.length ? data.customName : undefined,
+      job: job?.name,
       description: data.description,
       fields: data.fields,
       isCopy: false,
@@ -84,7 +87,7 @@ const CreateDocument = ({ template, handleCreate, handleClose }: Props) => {
             <Grid item container xs={12}>
               <Grid item xs={6}>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                  <img style={{height: "18.5vh"}} src={city_logo} alt="Los Santos City" />
+                  <img style={{height: "18.5vh"}} src={availableJobs.find(j => j.job === job?.name)?.logo ?? city_logo} alt="Los Santos City" />
                 </div>
               </Grid>
               <Grid item xs={6}>

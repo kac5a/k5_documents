@@ -13,8 +13,7 @@ else
 end
 
 if CurrentFramework == "esx" then
-  ESX = nil
-  TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+  ESX = exports["es_extended"]:getSharedObject()
   RegisterCallback = function (name, fn)
     ESX.RegisterServerCallback(name, fn)
   end

@@ -9,7 +9,7 @@ import { DATE_FORMAT_SHORT } from "../../utils/consts"
 import { useContext } from "react"
 import { texts } from "../../AppConfig"
 import { DocumentCtx } from "../../providers/DocumentProvider"
-
+import { availableJobs } from '../../AppConfig';
 
 const DocumentViewFromPlayer = () => {
   
@@ -30,7 +30,7 @@ const DocumentViewFromPlayer = () => {
             <Grid item container xs={12}>
               <Grid item xs={6}>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                  <CityLogo src={city_logo} alt="Los Santos City" />
+                  <CityLogo src={availableJobs.find(j => j.job === document?.job)?.logo ?? city_logo} alt="Los Santos City" />
                 </div>
               </Grid>
               <Grid item xs={6}>

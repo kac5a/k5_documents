@@ -26,7 +26,7 @@ const SignButton = ({ name, isSigned, setSigned }: Props) => {
   },[name, setSigned, signing])
 
   return (
-    <Container issigned={isSigned} onClick={() => !signing && sign(-1)}>
+    <Container issigned={!!isSigned} onClick={() => !signing && sign(-1)}>
       <SignHere>{texts.signHereText}</SignHere>
       <div style={{fontFamily: "'Oooh Baby', cursive"}}>{writtenName}</div>
     </Container>
@@ -49,7 +49,7 @@ const Container = styled("div")<ContainerProps>`
   height: 100%;
   border: 1px solid #000;
   margin-bottom: 20px;
-  cursor: ${(props) => props.issigned ? "initial" : "pointer"};
+  cursor: ${(props) => !!props.issigned ? "initial" : "pointer"};
 `
 
 const SignHere = styled("div")`

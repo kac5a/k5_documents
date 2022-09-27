@@ -9,6 +9,7 @@ import ViewDocumentField from "./ViewDocumentField"
 import SignedArea from "./SignedArea"
 import { DATE_FORMAT_SHORT } from "../../utils/consts"
 import { texts } from "../../AppConfig"
+import { availableJobs } from '../../AppConfig';
 
 const DocumentView = () => {
   const {isViewDocOpen, viewDocument: document, setViewDocOpen} = useContext(Context)
@@ -28,7 +29,7 @@ const DocumentView = () => {
             <Grid item container xs={12}>
               <Grid item xs={6}>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                  <CityLogo src={city_logo} alt="Los Santos City" />
+                  <CityLogo src={ availableJobs.find(j => j.job === document?.job)?.logo ?? city_logo} alt="Los Santos City" />
                 </div>
               </Grid>
               <Grid item xs={6}>

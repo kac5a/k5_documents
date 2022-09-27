@@ -3,14 +3,17 @@ const AVAILABLE_JOBS = [
   {
     job: 'police',
     templateGrades: [3, 4],
+    logo: 'https://i.imgur.com/YsTyMCc.png',
   },
   {
     job: 'ambulance',
     templateGrades: [3],
+    logo: 'https://i.pinimg.com/564x/6b/88/4f/6b884f7ebe28ff56a0e1fd9f5c47890a.jpg',
   },
   {
     job: 'mechanic',
     templateGrades: [4],
+    logo: '/web/build/mechaniclogo.jpg',
   },
 ]
 

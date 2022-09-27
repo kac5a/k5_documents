@@ -50,7 +50,7 @@ const IssuedDocuments = () => {
       field: 'customName',
       headerName: texts.customName,
       flex: 1,
-      renderCell: (params: GridRenderCellParams<string | undefined>) => (params.value === undefined ? <div style={{ fontStyle: "italic" }}>{texts.unnamed}</div> : params.value)
+      renderCell: (params: GridRenderCellParams<string | undefined>) => (params.value === undefined || params.value?.length === 0 ? <div style={{ fontStyle: "italic" }}>{texts.unnamed}</div> : params.value)
     },
     {
       field: 'name',

@@ -28,6 +28,7 @@ declare type K5Document = {
   id?: string
   name: string
   customName?: string
+  job?: string
   createdAt: string
   description: string
   fields: Field[]
