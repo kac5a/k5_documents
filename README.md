@@ -53,6 +53,18 @@ Only specified grades can access and edit the templates, that is shown in the de
 
 You can also change colors and texts if you scroll down in the config.
 
+## Document logo
+
+You have the ability to add custom logos for documents created by different jobs. You can use a link, or a local file aswell. It is recommended to use local files, so the loading time is minimal for these images. Be sure to format the logo properly:
+
+    {
+        job: 'mechanic',
+        templateGrades: [4],
+        logo: '/web/build/mechaniclogo.jpg',
+    }
+ 
+Add your local files in the `web/build/` folder.
+
 ## Server side document creation
 
 You can call the `k5_documents:createServerDocument` server event with a single data parameter. This will create a copy to the specified document and give it to the players "My Documents" table.
