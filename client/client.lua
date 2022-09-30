@@ -250,6 +250,11 @@ AddEventHandler('k5_documents:copyGave', function(data)
   Notification(Config.Locale.giveNotification .. " " .. data)
 end)
 
+RegisterNetEvent("k5_documents:useItem")
+AddEventHandler("k5_documents:useItem", function()
+	ExecuteCommand(Config.Command)
+end)
+
 
 RegisterNetEvent('k5_documents:copyReceived')
 AddEventHandler('k5_documents:copyReceived', function(data)

@@ -1,4 +1,5 @@
 local RegisterCallback
+local RegisterItem
 ESX = nil
 local QBCore
 local CurrentFramework
@@ -17,10 +18,16 @@ if CurrentFramework == "esx" then
   RegisterCallback = function (name, fn)
     ESX.RegisterServerCallback(name, fn)
   end
+  RegisterItem = function(itemName, fn)
+    ESX.RegisterUsableItem(itemName, fn)
+  end
 elseif CurrentFramework == "qb" then
   QBCore = exports['qb-core']:GetCoreObject()
   RegisterCallback = function (name, fn)
     QBCore.Functions.CreateCallback(name, fn)
+  end
+  RegisterItem = function(itemName, fn)
+    QBCore.Functions.CreateUseableItem(itemName, fn)
   end
 end
 
@@ -90,6 +97,12 @@ RegisterCallback('k5_documents:getPlayerCopies', function(source, cb)
   end)
 end)
 
+if Config.DocumentItemName then
+  RegisterItem(Config.DocumentItemName, function(source)
+    local src = source
+    TriggerClientEvent("k5_documents:useItem", src)
+  end)
+end
 
 RegisterCallback('k5_documents:getPlayerDocuments', function(source, cb)
   local src = source
@@ -278,6 +291,17 @@ AddEventHandler("k5_documents:receiveDocument", function(data, targetId)
     TriggerClientEvent("k5_documents:viewDocument", tsrc, result[1])
   end)
 end)
+
+
+function GetPlayer(src)
+  local Player
+  if CurrentFramework == "esx" then
+    Player = ESX.GetPlayerFromId(src)
+  elseif CurrentFramework == "qb" then
+    Player = QBCore.Functions.GetPlayer(src)
+  end
+  return Player
+end
 
 function GetPlayerIdentifier(src)
   local PlayerIdentifier

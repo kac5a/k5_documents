@@ -2,6 +2,8 @@ Config = {}
 
 Config.Command = "documents"
 
+Config.DocumentItemName = nil -- The name of the item you want to open the documents. If nil, no item will be registered
+
 Config.PaperProp = {
   name = "prop_cd_paper_pile1",
   xRot = -130.0, 
