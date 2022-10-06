@@ -1,6 +1,6 @@
 Config = {}
 
-Config.Command = "documents"
+Config.Command = "documents" -- If nil, the command won't work
 
 Config.DocumentItemName = nil -- The name of the item you want to open the documents. If nil, no item will be registered
 

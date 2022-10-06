@@ -118,7 +118,7 @@ RegisterNUICallback('hideDocument', function(_, cb)
   cb({})
 end)
 
-if CurrentFramework then
+if CurrentFramework and Config.Command then
   RegisterCommand(Config.Command, function()
     toggleNuiFrame(true, true)
   end)
@@ -252,7 +252,7 @@ end)
 
 RegisterNetEvent("k5_documents:useItem")
 AddEventHandler("k5_documents:useItem", function()
-	ExecuteCommand(Config.Command)
+	toggleNuiFrame(true, true)
 end)
 
 
