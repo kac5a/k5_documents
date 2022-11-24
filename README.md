@@ -113,7 +113,7 @@ These documents are available for everyone without a job restriction. You can ed
               },
             ],
             infoName: 'INFORMATION',
-            infoTemplate: 'So this guy is basivally robbed me. Arrest him!!!',
+            infoTemplate: 'So this guy is basically robbed me. Arrest him!!!',
           },
         ]
     }
