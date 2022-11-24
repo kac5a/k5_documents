@@ -14,12 +14,13 @@ import CreateDocument from "../Components/Forms/CreateDocument"
 import DocumentView from "../Components/DocumentView"
 import moment from "moment"
 import { DATE_FORMAT } from "../../utils/consts"
-import { texts } from "../../AppConfig"
+import { citizenTemplates, texts } from "../../AppConfig"
 
 const IssuedDocuments = () => {
 
   const [isDocumentFormOpen, setDocumentFormOpen] = useState(false)
   const [isTemplateListOpen, setTemplateListOpen] = useState(false)
+  const [isCitizenListOpen, setCitizenListOpen] = useState(false)
   const [documentTemplate, setDocumentTemplate] = useState<DocumentTemplate | undefined>()
 
   const {
@@ -133,6 +134,7 @@ const IssuedDocuments = () => {
           />
         </div>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          {citizenTemplates.length && <Button variant="contained" style={{ marginRight: "8px" }} color="secondary" onClick={() => setCitizenListOpen(true)}>{texts.newCitizenDocumentBtn}</Button>}
           <Button variant="contained" onClick={() => setTemplateListOpen(true)}>{texts.newDocumentBtn}</Button>
         </div>
       </div>
@@ -144,6 +146,7 @@ const IssuedDocuments = () => {
         }} />
       </Dialog>
       <CreateDocumentModal open={isTemplateListOpen} handleClose={() => setTemplateListOpen(false)} handleTemplateClick={handleTemplateSelect} />
+      <CreateDocumentModal citizen open={isCitizenListOpen} handleClose={() => setCitizenListOpen(false)} handleTemplateClick={handleTemplateSelect} />
       <DeleteDialog
         open={isDeleteOpen}
         handleAgree={handleDelete}

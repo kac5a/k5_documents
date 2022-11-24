@@ -1,4 +1,4 @@
-// These are the jobs that can create documents. The boss rank of this job can create document templates.
+// These are the jobs that can create documents. The ranks in templateGrades can create templates for this job.
 const AVAILABLE_JOBS = [
   {
     job: 'police',
@@ -14,6 +14,37 @@ const AVAILABLE_JOBS = [
     job: 'mechanic',
     templateGrades: [4],
     logo: '/web/build/mechaniclogo.jpg',
+  },
+]
+
+// These templates are visible to all players. If you don't want
+// any citizen templates, delete everything inside the [] like this:
+//    const CITIZEN_TEMPLATES = []
+//
+// If these templates are empty, the issued documents tab will
+// not be visible to players who fon't have a specified job.
+const CITIZEN_TEMPLATES = [
+  {
+    id: 'citizen_contract',
+    documentName: 'Citizen Contract',
+    documnetDescription:
+      'This is a document between two citizens of Los Santos. This document is an official legal document.',
+    fields: [
+      {
+        name: 'Firstname',
+        value: '',
+      },
+      {
+        name: 'Lastname',
+        value: '',
+      },
+      {
+        name: 'Valid Until',
+        value: '',
+      },
+    ],
+    infoName: 'INFORMATION',
+    infoTemplate: '',
   },
 ]
 
@@ -52,6 +83,7 @@ const TEXTS = {
   deleteTemplateQuestion: 'Are you sure you want to delete this template?:',
   date: 'Date',
   newDocumentBtn: 'New Document',
+  newCitizenDocumentBtn: 'New Citizen Document',
   deleteDocumentTitle: 'Delete Document',
   deleteDocumentQuestion: 'Are you sure you want to delete this document?:',
   signHereText: 'Sign Here',

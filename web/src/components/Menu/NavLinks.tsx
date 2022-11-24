@@ -4,7 +4,7 @@ import DifferenceIcon from '@mui/icons-material/Difference';
 import MyDocuments from '../Pages/MyDocuments';
 import Templates from '../Pages/Templates';
 import IssuedDocuments from '../Pages/IssuedDocuments';
-import { texts } from '../../AppConfig';
+import { citizenTemplates, texts } from '../../AppConfig';
 
 export const NavLinks: Page[] = [
   {
@@ -20,7 +20,7 @@ export const NavLinks: Page[] = [
     title: texts.issuedDocumentsTitle,
     component: <IssuedDocuments/>,
     iconComponent: <DraftsIcon />,
-    jobAccess: true,
+    jobAccess: !citizenTemplates.length,
     bossOnly: false
   },
   {
