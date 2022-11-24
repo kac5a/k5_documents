@@ -65,6 +65,59 @@ You have the ability to add custom logos for documents created by different jobs
  
 Add your local files in the `web/build/` folder.
 
+## Citizen Documents
+
+These documents are available for everyone without a job restriction. You can edit these templates in the `web/build/config.js` file like this:
+
+    {
+        const CITIZEN_TEMPLATES = [
+          {
+            id: 'citizen_contract',
+            documentName: 'My Citizen Contract',
+            documnetDescription:
+              'This is a document for everyone to use.',
+            fields: [
+              {
+                name: 'Firstname',
+                value: '',
+              },
+              {
+                name: 'Lastname',
+                value: '',
+              },
+              {
+                name: 'Valid Until',
+                value: '',
+              },
+            ],
+            infoName: 'INFORMATION',
+            infoTemplate: '',
+          },
+          {
+            id: 'fun_document',
+            documentName: 'Totally valid legal document',
+            documnetDescription:
+              'This is definetly a real document, for real. Like, just look at it',
+            fields: [
+              {
+                name: 'Firstname',
+                value: '',
+              },
+              {
+                name: 'Lastname',
+                value: '',
+              },
+              {
+                name: 'Valid Until',
+                value: '',
+              },
+            ],
+            infoName: 'INFORMATION',
+            infoTemplate: 'So this guy is basivally robbed me. Arrest him!!!',
+          },
+        ]
+    }
+
 ## Server side document creation
 
 You can call the `k5_documents:createServerDocument` server event with a single data parameter. This will create a copy to the specified document and give it to the players "My Documents" table.
