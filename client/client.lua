@@ -266,6 +266,14 @@ AddEventHandler('k5_documents:viewDocument', function(data)
 	toggleDocumentFrame(true, data.data)
 end)
 
+if Config.RegisterKey then
+  if Config.Command then
+    RegisterKeyMapping(Config.Command, Config.Locale.registerMapDescription, "keyboard", Config.RegisterKey)
+  else
+    print("^8ERROR: ^3No document command found. Please provide a \"Config.Command\" value.^7")
+  end
+end
+
 function playerSelector(confirmText)
   toggleNuiFrame(false, true, nil)
   selectingPlayer = true
