@@ -27,7 +27,7 @@ const CITIZEN_TEMPLATES = [
   {
     id: 'citizen_contract',
     documentName: 'Citizen Contract',
-    documnetDescription:
+    documentDescription:
       'This is a document between two citizens of Los Santos. This document is an official legal document.',
     fields: [
       {
