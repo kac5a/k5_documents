@@ -35,12 +35,12 @@ const CreateDocumentModal = ({ open, handleClose, handleTemplateClick, citizen}:
       <DialogTitle>{texts.selectDocumentType}</DialogTitle>
       <List sx={{ pt: 0 }}>
         {citizen ? citizenTemplates.map((t) => (
-          <ListItem button onClick={() => handleTemplateClick(t)} key={t.id}>
+          <ListItem onClick={() => handleTemplateClick(t)} key={t.id}>
             <ListItemText primary={t.documentName} />
           </ListItem>
           )) :
           (availableTempaltes && availableTempaltes.length) ? availableTempaltes.map((t) => (
-            <ListItem button onClick={() => handleTemplateClick(t)} key={t.id}>
+            <ListItem onClick={() => handleTemplateClick(t)} key={t.id}>
               <ListItemText primary={t.documentName} />
             </ListItem>
           )) :

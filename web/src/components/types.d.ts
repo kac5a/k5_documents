@@ -11,12 +11,9 @@ declare type Job = {
   grade: number
   grade_label: string
   grade_name: string
-  grade_salary: number
   label: string
   name: string
   isBoss: boolean
-  skin_female: Array<any>
-  skin_male: Array<any>
 }
 
 declare type Field = {

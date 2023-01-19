@@ -67,7 +67,7 @@ const TEXTS = {
   myDocumentsTitle: 'My Documents',
   issuedDocumentsTitle: 'Issued Documents',
   templatesTitle: 'Templates',
-  customDocumentName: 'Custom Document Name',
+  customDocumentName: 'Document Name',
   documentType: 'Type',
   documentName: 'Name',
   unnamed: 'Unnamed',

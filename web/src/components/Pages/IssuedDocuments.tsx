@@ -49,7 +49,7 @@ const IssuedDocuments = () => {
   const columns: GridColumns<K5Document> = [
     {
       field: 'customName',
-      headerName: texts.customName,
+      headerName: texts.customDocumentName,
       flex: 1,
       renderCell: (params: GridRenderCellParams<string | undefined>) => (params.value === undefined || params.value?.length === 0 ? <div style={{ fontStyle: "italic" }}>{texts.unnamed}</div> : params.value)
     },
