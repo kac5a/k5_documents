@@ -143,8 +143,6 @@ RegisterNUICallback('getPlayerJob', function(data, cb)
       grade_salary = PlayerJob.payment,
       label = PlayerJob.label,
       name = PlayerJob.name,
-      skin_female = {},
-      skin_male = {},
     }
     retData.isBoss = PlayerJob.isboss
     cb(retData)
