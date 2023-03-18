@@ -9,7 +9,6 @@ import { useState } from "react";
 import SignButton from "./SignButton";
 import { DATE_FORMAT_SHORT } from "../../../utils/consts";
 import { texts } from "../../../AppConfig";
-import Editor from "../../Editor";
 
 type Props = {
   template: DocumentTemplate
