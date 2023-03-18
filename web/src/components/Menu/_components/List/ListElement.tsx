@@ -25,7 +25,7 @@ const ListElement = ({title, selected, onClick, color, iconComponent, style}:Pro
         },
         '&.Mui-selected': {
           bgcolor: "primary.main",
-          boxShadow: "0 2px 6px rgba(255, 35, 35, 0.38);",
+          boxShadow: "0 2px 6px rgba(0, 0, 0, 0.2);",
           '&:hover': {
             bgcolor: 'primary.light',
           }
