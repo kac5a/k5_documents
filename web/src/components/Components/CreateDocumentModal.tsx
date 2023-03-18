@@ -7,7 +7,7 @@ import { useJob } from "../../hooks/useJob"
 type Props = {
   open: boolean
   handleClose: () => void
-  handleTemplateClick: (template: DocumentTemplate) => void
+  handleTemplateClick: (template: DocumentTemplate, citizen: boolean) => void
   citizen?: boolean
 }
 
@@ -35,12 +35,12 @@ const CreateDocumentModal = ({ open, handleClose, handleTemplateClick, citizen}:
       <DialogTitle>{texts.selectDocumentType}</DialogTitle>
       <List sx={{ pt: 0 }}>
         {citizen ? citizenTemplates.map((t) => (
-          <ListItem onClick={() => handleTemplateClick(t)} key={t.id}>
+          <ListItem onClick={() => handleTemplateClick(t, true)} key={t.id}>
             <ListItemText primary={t.documentName} />
           </ListItem>
           )) :
           (availableTempaltes && availableTempaltes.length) ? availableTempaltes.map((t) => (
-            <ListItem onClick={() => handleTemplateClick(t)} key={t.id}>
+            <ListItem onClick={() => handleTemplateClick(t, false)} key={t.id}>
               <ListItemText primary={t.documentName} />
             </ListItem>
           )) :

@@ -5,19 +5,20 @@ import DocumentTitle from "./DocumentTitle";
 import { usePlayerData } from "../../../hooks/usePlayerData";
 import moment from "moment"
 import { useJob } from "../../../hooks/useJob";
-import city_logo from "../../../assets/city_logo.png"
 import { useState } from "react";
 import SignButton from "./SignButton";
 import { DATE_FORMAT_SHORT } from "../../../utils/consts";
-import { availableJobs, texts } from "../../../AppConfig";
+import { texts } from "../../../AppConfig";
+import Editor from "../../Editor";
 
 type Props = {
   template: DocumentTemplate
   handleCreate: (data: K5Document) => void
   handleClose: () => void
+  logoSrc: string
 }
 
-const CreateDocument = ({ template, handleCreate, handleClose }: Props) => {
+const CreateDocument = ({ template, handleCreate, handleClose, logoSrc }: Props) => {
   
   const { playerData } = usePlayerData()
   const { job } = useJob()
@@ -87,7 +88,7 @@ const CreateDocument = ({ template, handleCreate, handleClose }: Props) => {
             <Grid item container xs={12}>
               <Grid item xs={6}>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                  <img style={{height: "18.5vh"}} src={availableJobs.find(j => j.job === job?.name)?.logo ?? city_logo} alt="Los Santos City" />
+                  <img style={{height: "18.5vh"}} src={logoSrc} alt="Los Santos City" />
                 </div>
               </Grid>
               <Grid item xs={6}>

@@ -7,6 +7,7 @@ import ViewIcon from '@mui/icons-material/RemoveRedEye';
 import ShowIcon from '@mui/icons-material/UploadFile';
 import CopyIcon from '@mui/icons-material/FileCopy';
 import DeleteDialog from "../Components/DeleteDialog"
+import city_logo from "../../assets/city_logo.png"
 import { Context } from "../../context/Context"
 import useDeleteDocument from "../../hooks/useDeleteDocument"
 import CreateDocumentModal from "../Components/CreateDocumentModal"
@@ -14,14 +15,17 @@ import CreateDocument from "../Components/Forms/CreateDocument"
 import DocumentView from "../Components/DocumentView"
 import moment from "moment"
 import { DATE_FORMAT } from "../../utils/consts"
-import { citizenTemplates, texts } from "../../AppConfig"
+import { availableJobs, citizenTemplates, texts } from "../../AppConfig"
+import { useJob } from "../../hooks/useJob"
 
 const IssuedDocuments = () => {
 
   const [isDocumentFormOpen, setDocumentFormOpen] = useState(false)
   const [isTemplateListOpen, setTemplateListOpen] = useState(false)
   const [isCitizenListOpen, setCitizenListOpen] = useState(false)
+  const [logoSrc, setLogoSrc] = useState(city_logo)
   const [documentTemplate, setDocumentTemplate] = useState<DocumentTemplate | undefined>()
+  const { job } = useJob()
 
   const {
     documents,
@@ -110,8 +114,9 @@ const IssuedDocuments = () => {
 
   }, [handleGetDocuments, setDocumentsLoading])
 
-  const handleTemplateSelect = (t: DocumentTemplate) => {
+  const handleTemplateSelect = (t: DocumentTemplate, citizen: boolean) => {
     setTemplateListOpen(false)
+    citizen ? setLogoSrc(city_logo) : setLogoSrc(availableJobs.find(j => j.job === job?.name)?.logo || city_logo)
     setDocumentTemplate(t)
     setDocumentFormOpen(true)
   }
@@ -134,14 +139,14 @@ const IssuedDocuments = () => {
           />
         </div>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          {citizenTemplates.length && <Button variant="contained" style={{ marginRight: "8px" }} color="secondary" onClick={() => setCitizenListOpen(true)}>{texts.newCitizenDocumentBtn}</Button>}
+          {!!citizenTemplates.length && <Button variant="contained" style={{ marginRight: "8px" }} color="secondary" onClick={() => setCitizenListOpen(true)}>{texts.newCitizenDocumentBtn}</Button>}
           <Button variant="contained" onClick={() => setTemplateListOpen(true)}>{texts.newDocumentBtn}</Button>
         </div>
       </div>
       <Dialog maxWidth="md" open={isDocumentFormOpen} onClose={() => {
         setDocumentFormOpen(false)
       }}>
-        <CreateDocument handleCreate={handleCreate} template={documentTemplate!} handleClose={() => {
+        <CreateDocument handleCreate={handleCreate} logoSrc={logoSrc} template={documentTemplate!} handleClose={() => {
           setDocumentFormOpen(false)
         }} />
       </Dialog>
