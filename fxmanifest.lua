@@ -2,8 +2,8 @@ fx_version "cerulean"
 
 description "A better document management script"
 author "K5 Scripts"
-version '1.3.2'
-update "Fixed missing customName header text, and random printed messages"
+version '1.3.4'
+update "Removed issuer job from citizen documents, added custom name column to received documents"
 repository 'https://github.com/kac5a/k5_documents'
 
 lua54 'yes'

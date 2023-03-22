@@ -22,6 +22,7 @@ const IssuedDocuments = () => {
 
   const [isDocumentFormOpen, setDocumentFormOpen] = useState(false)
   const [isTemplateListOpen, setTemplateListOpen] = useState(false)
+  const [isCitizenDocument, setCitizenDocument] = useState(false)
   const [isCitizenListOpen, setCitizenListOpen] = useState(false)
   const [logoSrc, setLogoSrc] = useState(city_logo)
   const [documentTemplate, setDocumentTemplate] = useState<DocumentTemplate | undefined>()
@@ -116,7 +117,15 @@ const IssuedDocuments = () => {
 
   const handleTemplateSelect = (t: DocumentTemplate, citizen: boolean) => {
     setTemplateListOpen(false)
-    citizen ? setLogoSrc(city_logo) : setLogoSrc(availableJobs.find(j => j.job === job?.name)?.logo || city_logo)
+    setCitizenListOpen(false)
+    if (citizen) {
+      setLogoSrc(city_logo)
+      setCitizenDocument(true)
+    } else {
+      setLogoSrc(availableJobs.find(j => j.job === job?.name)?.logo || city_logo)
+      setCitizenDocument(false)
+    }
+    
     setDocumentTemplate(t)
     setDocumentFormOpen(true)
   }
@@ -146,7 +155,7 @@ const IssuedDocuments = () => {
       <Dialog maxWidth="md" open={isDocumentFormOpen} onClose={() => {
         setDocumentFormOpen(false)
       }}>
-        <CreateDocument handleCreate={handleCreate} logoSrc={logoSrc} template={documentTemplate!} handleClose={() => {
+        <CreateDocument isCitizen={isCitizenDocument} handleCreate={handleCreate} logoSrc={logoSrc} template={documentTemplate!} handleClose={() => {
           setDocumentFormOpen(false)
         }} />
       </Dialog>

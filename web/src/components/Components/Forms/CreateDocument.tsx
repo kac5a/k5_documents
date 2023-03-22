@@ -15,9 +15,10 @@ type Props = {
   handleCreate: (data: K5Document) => void
   handleClose: () => void
   logoSrc: string
+  isCitizen?: boolean
 }
 
-const CreateDocument = ({ template, handleCreate, handleClose, logoSrc }: Props) => {
+const CreateDocument = ({ template, handleCreate, handleClose, logoSrc, isCitizen }: Props) => {
   
   const { playerData } = usePlayerData()
   const { job } = useJob()
@@ -55,7 +56,7 @@ const CreateDocument = ({ template, handleCreate, handleClose, logoSrc }: Props)
       name: data.name,
       createdAt: (new Date()).toString(),
       customName: data.customName?.length ? data.customName : undefined,
-      job: job?.name,
+      job: !isCitizen ? job?.name : undefined,
       description: data.description,
       fields: data.fields,
       isCopy: false,
@@ -65,7 +66,7 @@ const CreateDocument = ({ template, handleCreate, handleClose, logoSrc }: Props)
         firstname: playerData?.firstname,
         lastname: playerData?.lastname,
         birthDate: moment(new Date(playerData?.dateofbirth || "")).format(DATE_FORMAT_SHORT),
-        jobName: job?.label
+        jobName: !isCitizen ? job?.label : undefined
       }
     } as K5Document
 
@@ -113,16 +114,17 @@ const CreateDocument = ({ template, handleCreate, handleClose, logoSrc }: Props)
                       <Grid item xs={6}>
                         <Typography style={{fontWeight: "bold", fontSize: "0.7rem"}}>{texts.issuerDOB}</Typography>
                       </Grid>
-                      <Grid item xs={6}>
+                      {!isCitizen ? <Grid item xs={6}>
                         <Typography style={{fontWeight: "bold", fontSize: "0.7rem"}}>{texts.issuerJob}</Typography>
-                      </Grid>
+                      </Grid> :
+                        <Grid item xs={6} />}
 
                        <Grid item xs={6} >
                         <Typography style={{ fontSize: "0.9rem" }}>{moment(new Date(playerData?.dateofbirth || "")).format(DATE_FORMAT_SHORT)}</Typography>
                       </Grid>
-                      <Grid item xs={6}>
+                      {!isCitizen ? <Grid item xs={6}>
                         <Typography style={{ fontSize: "0.9rem" }}>{ job?.label }</Typography>
-                      </Grid>
+                      </Grid> : <Grid item xs={6} />}
                       
                     </Grid>
                   </CardContent>

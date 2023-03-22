@@ -39,8 +39,13 @@ const MyDocuments = () => {
 
   const columns: GridColumns<K5Document> = [
     {
+      field: 'customName',
+      headerName: texts.customDocumentName,
+      flex: 1,
+    },
+    {
       field: 'name',
-      headerName: texts.documentName,
+      headerName: texts.documentType,
       flex: 1,
     },
     {

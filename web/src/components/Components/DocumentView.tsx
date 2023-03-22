@@ -54,16 +54,16 @@ const DocumentView = () => {
                       <Grid item xs={6}>
                         <IssuerTitle>{texts.issuerDOB}</IssuerTitle>
                       </Grid>
-                      <Grid item xs={6}>
+                      {document?.issuer.jobName ?  <Grid item xs={6}>
                         <IssuerTitle>{texts.issuerJob}</IssuerTitle>
-                      </Grid>
+                      </Grid>: <Grid item xs={6}/>}
 
                       <Grid item xs={6} >
                         <IssuerData>{moment(new Date(document?.issuer.birthDate || "")).format(DATE_FORMAT_SHORT)}</IssuerData>
                       </Grid>
-                      <Grid item xs={6}>
+                      {document?.issuer.jobName ? <Grid item xs={6}>
                         <IssuerData>{ document?.issuer.jobName }</IssuerData>
-                      </Grid>
+                      </Grid> : <Grid item xs={6}/>}
                       
                     </Grid>
                   </CardContent>
