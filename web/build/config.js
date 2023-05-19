@@ -2,8 +2,8 @@
 const AVAILABLE_JOBS = [
   {
     job: 'police',
-    templateGrades: [3, 4],
-    logo: 'https://i.imgur.com/YsTyMCc.png',
+    templateGrades: [11, 12, 13, 14],
+    logo: 'https://static.wikia.nocookie.net/alterlifepolicedepartement/images/5/51/R_%281%29.png/revision/latest?cb=20220111090530',
   },
   {
     job: 'ambulance',
