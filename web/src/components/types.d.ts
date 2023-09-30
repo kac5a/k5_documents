@@ -57,5 +57,6 @@ type Texts = {
 type PlayerData = {
   firstname: string,
   lastname: string,
-  dateofbirth: string
+  dateofbirth: string,
+  dateformat: string
 }

@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/web/build/static/js/main.a9020f42.js",
+    "main.js": "/web/build/static/js/main.62d9f438.js",
     "static/media/city_logo.png": "/web/build/static/media/city_logo.008b591a2d4e6445d96c.png",
     "index.html": "/web/build/index.html",
-    "main.a9020f42.js.map": "/web/build/static/js/main.a9020f42.js.map"
+    "main.62d9f438.js.map": "/web/build/static/js/main.62d9f438.js.map"
   },
   "entrypoints": [
-    "static/js/main.a9020f42.js"
+    "static/js/main.62d9f438.js"
   ]
 }

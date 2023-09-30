@@ -160,6 +160,7 @@ RegisterNUICallback('getPlayerData', function(data, cb)
       firstname = PlayerData.firstname,
       lastname = PlayerData.lastname,
       dateofbirth = PlayerData.birthdate,
+      dateformat = Config.BirthdateFormat,
     })
   end
 end)
