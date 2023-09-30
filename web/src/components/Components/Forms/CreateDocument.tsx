@@ -37,7 +37,7 @@ const CreateDocument = ({ template, handleCreate, handleClose, logoSrc, isCitize
       issuer: {
         firstname: playerData?.firstname,
         lastname: playerData?.lastname,
-        birthDate: moment(new Date(playerData?.dateofbirth || "")).format(DATE_FORMAT_SHORT),
+        birthDate: moment(playerData?.dateofbirth, playerData?.dateformat).format(DATE_FORMAT_SHORT),
         jobName: job?.label
       }
     }
@@ -52,6 +52,7 @@ const CreateDocument = ({ template, handleCreate, handleClose, logoSrc, isCitize
 
 
   const handleCreateDocument: SubmitHandler<K5Document> = (data: K5Document) => {
+
     let result = {
       name: data.name,
       createdAt: (new Date()).toString(),
@@ -65,7 +66,7 @@ const CreateDocument = ({ template, handleCreate, handleClose, logoSrc, isCitize
       issuer: {
         firstname: playerData?.firstname,
         lastname: playerData?.lastname,
-        birthDate: moment(new Date(playerData?.dateofbirth || "")).format(DATE_FORMAT_SHORT),
+        birthDate: moment(playerData?.dateofbirth, playerData?.dateformat).format(DATE_FORMAT_SHORT),
         jobName: !isCitizen ? job?.label : undefined
       }
     } as K5Document
@@ -120,7 +121,7 @@ const CreateDocument = ({ template, handleCreate, handleClose, logoSrc, isCitize
                         <Grid item xs={6} />}
 
                        <Grid item xs={6} >
-                        <Typography style={{ fontSize: "0.9rem" }}>{moment(new Date(playerData?.dateofbirth || "")).format(DATE_FORMAT_SHORT)}</Typography>
+                        <Typography style={{ fontSize: "0.9rem" }}>{moment(playerData?.dateofbirth, playerData?.dateformat).format(DATE_FORMAT_SHORT)}</Typography>
                       </Grid>
                       {!isCitizen ? <Grid item xs={6}>
                         <Typography style={{ fontSize: "0.9rem" }}>{ job?.label }</Typography>

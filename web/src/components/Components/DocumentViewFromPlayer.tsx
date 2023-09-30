@@ -1,11 +1,9 @@
 import styled from "@emotion/styled"
 import { Box, Grid, Card, CardContent, Typography, Paper } from "@mui/material"
-import moment from "moment"
 import city_logo from "../../assets/city_logo.png"
 import DocumentTitle from "./Forms/DocumentTitle"
 import ViewDocumentField from "./ViewDocumentField"
 import SignedArea from "./SignedArea"
-import { DATE_FORMAT_SHORT } from "../../utils/consts"
 import { useContext } from "react"
 import { texts } from "../../AppConfig"
 import { DocumentCtx } from "../../providers/DocumentProvider"
@@ -60,7 +58,7 @@ const DocumentViewFromPlayer = () => {
                       </Grid> : <Grid item xs={6}/>}
 
                       <Grid item xs={6} >
-                        <IssuerData>{moment(new Date(document?.issuer.birthDate || "")).format(DATE_FORMAT_SHORT)}</IssuerData>
+                        <IssuerData>{document?.issuer.birthDate || ""}</IssuerData>
                       </Grid>
                       {document?.issuer.jobName ? <Grid item xs={6}>
                         <IssuerData>{ document?.issuer.jobName }</IssuerData>

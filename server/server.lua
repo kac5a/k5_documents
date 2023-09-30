@@ -181,7 +181,12 @@ RegisterCallback('k5_documents:getPlayerData', function(source, cb)
     'SELECT firstname, lastname, dateofbirth FROM users WHERE identifier = @identifier', {
     ['@identifier'] = PlayerIdentifier
   }, function(result)
-    cb(result[1])
+    cb({
+      firstname = result[1].firstname,
+      lastname = result[1].lastname,
+      dateofbirth = result[1].dateofbirth,
+      dateformat = Config.BirthdateFormat,
+    })
   end)
 end)
 
